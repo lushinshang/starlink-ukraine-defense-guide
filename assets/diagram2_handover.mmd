@@ -1,0 +1,19 @@
+flowchart TD
+    classDef blue fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef amber fill:#451a03,stroke:#f59e0b,stroke-width:2px,color:#fef08a;
+    classDef red fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#fee2e2;
+    classDef green fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#d1fae5;
+
+    A["📡 終端發送通訊請求<br>（自報座標：完全靜止）"]:::blue
+    --> B["🛰️ SpaceX 衛星群與閘道站接收<br>（物理層特徵交叉校驗）"]:::blue
+
+    B --> C["1. 多普勒頻移曲線分析<br>（推論分析）"]:::amber
+    B --> D["2. H3 微蜂巢窄波束對準比對<br>（推論分析）"]:::amber
+    B --> E["3. 衛星換手 Handover 頻率統計<br>（推論分析）"]:::amber
+
+    C --> F{"物理特徵是否與<br>自報靜止狀態產生矛盾？"}:::blue
+    D --> F
+    E --> F
+
+    F -- 否：特徵相符 --> G["✅ 授權握手<br>維持正常通訊 Session"]:::green
+    F -- 是：特徵矛盾 --> H["❌ 判定超速／座標欺騙<br>伺服器端強制終止 Session"]:::red

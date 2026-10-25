@@ -1,0 +1,15 @@
+flowchart TD
+    classDef comp fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef action fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef hack fill:#312e81,stroke:#a855f7,stroke-width:2px,color:#f8fafc;
+    classDef warn fill:#451a03,stroke:#f59e0b,stroke-width:2px,color:#fef08a;
+
+    A["🛰️ 板載 STA8089 晶片 / 自製模組<br>（產生 NMEA 經緯度語句）"]:::comp
+    --> B["⚡ 終端主機板 UART 介面<br>（接收座標資料流）"]:::comp
+
+    B --> C{"是否被電戰壓制 /<br>需要偽造靜止？"}:::action
+    C -- 否 --> D["回報真實 GPS 座標<br>（受電子圍籬與 160 km/h 限制）"]:::warn
+    C -- 是（單方主張） --> E["🛠️ 偽裝注入模組<br>（覆寫為合格且固定靜態座標）"]:::hack
+
+    E --> F["📡 終端自認靜止合規<br>向衛星發起連線握手"]:::comp
+    F --> G["🚀 實體高速位移中<br>（飛越交戰區或無人機巡航）"]:::warn
